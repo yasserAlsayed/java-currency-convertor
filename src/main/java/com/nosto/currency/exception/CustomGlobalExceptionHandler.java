@@ -24,30 +24,32 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorMessage> springHandleNotFound(NotFoundException ex,HttpServletResponse response) throws IOException {
-    	 ErrorMessage errors = creatError(ex,HttpStatus.NOT_FOUND);
-         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    	 return printErrorMessage(ex,HttpStatus.NOT_FOUND,null);
     }
+
+
+	private ResponseEntity<ErrorMessage> printErrorMessage(Exception ex,HttpStatus status,String message) {
+		ErrorMessage errors = creatError(ex,status);
+		if(message!=null&& !message.isEmpty())
+			errors.setError(message);
+        return new ResponseEntity<>(errors, status);
+	}
 
 
     @ExceptionHandler(UnSupportedCurrencyException.class)
     public ResponseEntity<ErrorMessage> springUnSupportedFieldPatch(UnSupportedCurrencyException ex,HttpServletResponse response) throws IOException {
-    	 ErrorMessage errors = creatError(ex,HttpStatus.METHOD_NOT_ALLOWED);
-         return new ResponseEntity<>(errors, HttpStatus.METHOD_NOT_ALLOWED);
+    	return printErrorMessage(ex,HttpStatus.METHOD_NOT_ALLOWED,null);
     }
 
     @ExceptionHandler(IOException.class)
     public ResponseEntity<ErrorMessage> springUnSupportedFieldPatch(IOException ex,HttpServletResponse response) throws IOException {
-    	 ErrorMessage errors = creatError(ex,HttpStatus.INTERNAL_SERVER_ERROR);
-    	 errors.setError("Server connection error, try again later...");
-    	 return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
+    	return printErrorMessage(ex,HttpStatus.INTERNAL_SERVER_ERROR,"Server connection error, try again later..."); 
     }
     
     // @Validate For Validating Path Variables and Request Parameters
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorMessage> constraintViolationException(ConstraintViolationException ex,HttpServletResponse response) throws IOException {
-        ErrorMessage errors = creatError(ex,HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-        
+        return printErrorMessage(ex,HttpStatus.BAD_REQUEST,null);
     }
 
 
@@ -55,7 +57,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		ErrorMessage errors = new ErrorMessage();
         errors.setTimestamp(LocalDateTime.now());
         errors.setError(ex.getMessage());
-        errors.setStatus(status.value());
+        errors.setStatus(status.name());
 		return errors;
 	}
 
