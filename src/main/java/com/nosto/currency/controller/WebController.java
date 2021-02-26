@@ -22,6 +22,7 @@ import com.nosto.currency.service.CurrencyConvertorService;
 
 @Controller
 @RequestMapping("/")
+@Validated
 public class WebController {
 	
 	@Autowired

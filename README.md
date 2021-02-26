@@ -35,4 +35,11 @@
 5- Web UI:
 	
 	-> http://localhost:8080
+	
+# Heroku 
+----------------------	
+	-> https://git.heroku.com/stormy-eyrie-34259.git
+	
+ 	-> https://stormy-eyrie-34259.herokuapp.com/
+
  
