@@ -10,7 +10,7 @@ public class ErrorMessage implements Serializable {
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime timestamp;
-    private int status;
+    private String status;
     private String error;
     
 	public LocalDateTime getTimestamp() {
@@ -19,10 +19,10 @@ public class ErrorMessage implements Serializable {
 	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public String getError() {
